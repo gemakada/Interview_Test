@@ -270,6 +270,7 @@ public class PedestrianMapFragment extends Fragment implements LocationListener 
             x=String.valueOf(latnew);
             y=String.valueOf(lonnew);
         }
+        mMap.clear();
 
         ApiIntreface.ApiInterface apiService =
                 ApiClient.getClient().create(ApiIntreface.ApiInterface.class);

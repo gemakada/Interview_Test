@@ -37,7 +37,7 @@ public class SecondAct extends AppCompatActivity {
         else {
 
             ImageView img=(ImageView) findViewById(R.id.image);
-            img.setImageResource(R.drawable.ic_venue_container);
+            img.setImageResource(0);
 
         }
 

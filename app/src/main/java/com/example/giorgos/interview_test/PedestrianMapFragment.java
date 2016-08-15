@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -139,25 +140,29 @@ public class PedestrianMapFragment extends Fragment implements LocationListener 
         mMap = mapview.getMap();
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
+            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
+            String bestProvider = locationManager.getBestProvider(criteria, true);
+            locationManager.requestLocationUpdates(bestProvider, 5000, 0, this);
             //mMap.setMyLocationEnabled(true);
             //current = mMap.getMyLocation();
         }
 
 
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
-        String bestProvider = locationManager.getBestProvider(criteria, true);
-        location1 = locationManager.getLastKnownLocation(bestProvider);
+        //locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+       // Criteria criteria = new Criteria();
+        //String bestProvider = locationManager.getBestProvider(criteria, true);
+        //location1 = locationManager.getLastKnownLocation(bestProvider);
 
-        if (location1 != null) {
-            gpslatitude = location1.getLatitude();
-            gpslongitude = location1.getLongitude();
-        }
-        if (location1 != null) {
+       // if (location1 != null) {
+       //     gpslatitude = location1.getLatitude();
+       //    gpslongitude = location1.getLongitude();
+      //  }
+      //  if (location1 != null) {
             //onLocationChanged(location1);
-        }
+        //}
         listener=this;
-        locationManager.requestLocationUpdates(bestProvider, 5000, 0, this);
+
 
 
 

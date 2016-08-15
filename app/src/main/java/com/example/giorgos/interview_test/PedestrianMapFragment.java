@@ -444,7 +444,13 @@ public class PedestrianMapFragment extends Fragment implements LocationListener 
 
                        // Log.e(LOG_TAG,String.valueOf(String.valueOf(Venues.size())));
 
-                            who.setCategory(response.body().getRes().getInfo().getCategories().get(0).getName());
+                            if (response.body().getRes().getInfo().getCategories()!=null) {
+
+                                if (response.body().getRes().getInfo().getCategories().size()>0) {
+
+                                    who.setCategory(response.body().getRes().getInfo().getCategories().get(0).getName());
+                                }
+                            }
                             who.setRating(response.body().getRes().getInfo().getRating());
                             String linkPrefix=" ";
                             String width=" ";

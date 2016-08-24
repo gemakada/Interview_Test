@@ -129,6 +129,9 @@ public class PedestrianMapFragment extends Fragment implements LocationListener 
 
 
         mapview.onCreate(savedInstanceState);
+        if (android.os.Build.VERSION.SDK_INT>=23) {
+            this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
 
         mapview.onResume();
         try {
@@ -143,10 +146,12 @@ public class PedestrianMapFragment extends Fragment implements LocationListener 
             locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
             Criteria criteria = new Criteria();
             String bestProvider = locationManager.getBestProvider(criteria, true);
-            locationManager.requestLocationUpdates(bestProvider, 5000, 0, this);
+            locationManager.requestLocationUpdates(bestProvider, 0, 0, this);
+
             //mMap.setMyLocationEnabled(true);
             //current = mMap.getMyLocation();
         }
+
 
 
         //locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
@@ -281,18 +286,20 @@ public class PedestrianMapFragment extends Fragment implements LocationListener 
             @Override
             public void onResponse(Call<VenuesResponse> call, Response<VenuesResponse> response) {
                 if (response!=null) {
-                    Venues=response.body().getRes().getVenues();
-                    Log.e(LOG_TAG,String.valueOf(String.valueOf(Venues.size())));
-                    for(int i=0; i<Venues.size(); i++) {
-                        if (Venues.get(i).getLocation().getAddress()!=null) {
-                            Log.e(LOG_TAG, Venues.get(i).getLocation().getAddress());
-                            who=Venues.get(i);
+                    if (response.body()!= null) {
+                        Venues = response.body().getRes().getVenues();
+                        Log.e(LOG_TAG, String.valueOf(String.valueOf(Venues.size())));
+                        for (int i = 0; i < Venues.size(); i++) {
+                            if (Venues.get(i).getLocation().getAddress() != null) {
+                                Log.e(LOG_TAG, Venues.get(i).getLocation().getAddress());
+                                who = Venues.get(i);
 
+                            }
                         }
+
+
+                        setUpMap();
                     }
-
-
-                    setUpMap();
                 }
             }
 
@@ -354,7 +361,7 @@ public class PedestrianMapFragment extends Fragment implements LocationListener 
             dialog.setTitle("Calculating Position and Venues...");
             dialog.setMessage("Please wait...");
             dialog.setCancelable(false);
-            dialog.setIndeterminate(true);
+            dialog.setIndeterminate(false);
             dialog.show();
         }
 
@@ -398,7 +405,7 @@ public class PedestrianMapFragment extends Fragment implements LocationListener 
             dialog.setTitle("Retrieving Venues...");
             dialog.setMessage("Please wait...");
             dialog.setCancelable(false);
-            dialog.setIndeterminate(true);
+            dialog.setIndeterminate(false);
             dialog.show();
         }
 
@@ -507,6 +514,36 @@ public class PedestrianMapFragment extends Fragment implements LocationListener 
 
 
 
+
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+                        Criteria criteria = new Criteria();
+                        String bestProvider = locationManager.getBestProvider(criteria, true);
+                        locationManager.requestLocationUpdates(bestProvider, 0, 0, this);
+
+                        //mMap.setMyLocationEnabled(true);
+                        //current = mMap.getMyLocation();
+                    }
+
+
+
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
 
 
 

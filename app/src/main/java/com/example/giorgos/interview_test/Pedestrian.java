@@ -86,7 +86,7 @@ public class Pedestrian extends AppCompatActivity  {
         }
 
         setContentView(R.layout.pedestrian);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        //Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
 
         //setSupportActionBar(myToolbar);
 

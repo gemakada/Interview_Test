@@ -189,6 +189,7 @@ public class PedestrianMapFragment extends Fragment implements LocationListener 
                 if (touch) {
                     marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_venue_pin_selected2));
                     who=Venues.get(Integer.parseInt(marker.getTitle()));
+
                     UpdateInfo();
 
                     mMap.getUiSettings().setAllGesturesEnabled(false);

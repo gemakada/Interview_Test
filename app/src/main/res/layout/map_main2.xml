@@ -29,18 +29,13 @@
         android:layout_height="match_parent">
 
 
-
         <com.google.android.gms.maps.MapView
             android:id="@+id/Location_map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
-
-
-
-
 
 
     </RelativeLayout>

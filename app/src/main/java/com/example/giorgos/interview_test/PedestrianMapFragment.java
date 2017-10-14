@@ -111,7 +111,7 @@ public class PedestrianMapFragment extends Fragment implements LocationListener 
     public List<Venue> Venues;
     public boolean mTouched;
     public boolean touch=true;
-    public Venue who1;
+    public Venue who;
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
